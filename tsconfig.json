@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "ES2020",
+    "rootDir": "src",
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strictBindCallApply": false,
+    "strictFunctionTypes": false,
+    "typeRoots": ["./src/@types", "./node_modules/@types"]
+  },
+  "include": ["src", "src/types/**/*.d.ts"]
+}
