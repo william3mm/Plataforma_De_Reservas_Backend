@@ -1,5 +1,5 @@
 import { Model, DataTypes, Sequelize as SequelizeInstance } from "sequelize";
-import { ServiceAttributes } from "../interfaces/Service";
+import { ServiceAttributes } from "../interfaces/Service.js";
 
 export default class Service
   extends Model<ServiceAttributes, Partial<ServiceAttributes>>

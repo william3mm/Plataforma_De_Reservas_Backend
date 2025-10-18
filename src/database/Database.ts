@@ -1,10 +1,10 @@
 import { Sequelize } from "sequelize";
 import User from "../models/User.js";
 import Service from "../models/Service.js";
-
+import Reservation from "../models/Reservation.js";
 import databaseconfig from "../config/database.js";
 
-const models = [User, Service];
+const models = [User, Service, Reservation];
 
 export const sequelize = new Sequelize(databaseconfig);
 

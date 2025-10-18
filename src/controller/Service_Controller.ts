@@ -1,6 +1,5 @@
 import Service from "../models/Service.js";
 import checkPrestador from "../validator/checkPrestador.js";
-import { Response } from "express";
 
 // Função de guarda de tipo para erros (pode ser reutilizada)
 function isErrorWithMessage(error: unknown): error is { message: string } {
@@ -14,7 +13,7 @@ function isErrorWithMessage(error: unknown): error is { message: string } {
 
 export default class ServiceController {
   // Usamos AuthRequest em vez de Request
-  static async create(req: any, res: Response) {
+  static async create(req: any, res: any) {
     try {
       // O erro de 'checkPrestador' foi corrigido usando AuthRequest
       checkPrestador(req);
@@ -25,7 +24,6 @@ export default class ServiceController {
         throw new Error("Todos os campos são obrigatórios");
       }
 
-      // req.userID agora é reconhecido pelo TypeScript!
       const prestadorId = req.userID;
 
       const service = await Service.create({
@@ -34,7 +32,7 @@ export default class ServiceController {
         preco,
         prestadorId,
       });
-      return res.status(201).json(service);
+      return res.status(201).json({ data: service });
     } catch (error) {
       // Usamos a função de guarda para tratar o erro com segurança
       const message = isErrorWithMessage(error)
@@ -45,7 +43,7 @@ export default class ServiceController {
   }
 
   // Repetir a correção para update
-  static async update(req: any, res: Response) {
+  static async update(req: any, res: any) {
     try {
       checkPrestador(req);
 
@@ -69,7 +67,7 @@ export default class ServiceController {
   }
 
   // Repetir a correção para delete
-  static async delete(req: any, res: Response) {
+  static async delete(req: any, res: any) {
     try {
       checkPrestador(req);
 
