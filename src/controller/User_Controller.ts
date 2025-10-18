@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Op } from "sequelize";
-import User from "../models/User";
-import { UserType } from "../types/User";
+import User from "../models/User.js";
+import { UserType } from "../types/User.js";
 
 export default class UserController {
   static async create(req: Request, res: Response) {

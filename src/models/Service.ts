@@ -1,11 +1,13 @@
 import { Model, DataTypes, Sequelize as SequelizeInstance } from "sequelize";
 import { ServiceAttributes } from "../interfaces/Service";
-import User from "./User";
 
 export default class Service
   extends Model<ServiceAttributes, Partial<ServiceAttributes>>
   implements ServiceAttributes
 {
+  static associate(models: any) {
+    this.belongsTo(models.User, { foreignKey: "prestadorId", as: "prestador" });
+  }
   public id!: number;
   public nome!: string;
   public descricao!: string;
@@ -40,7 +42,7 @@ export default class Service
           type: DataTypes.INTEGER,
           allowNull: false,
           references: {
-            model: User,
+            model: "User",
             key: "id",
           },
           onDelete: "CASCADE",
@@ -52,7 +54,5 @@ export default class Service
         modelName: "Service",
       }
     );
-
-    Service.belongsTo(User, { foreignKey: "prestadorId", as: "prestador" });
   }
 }

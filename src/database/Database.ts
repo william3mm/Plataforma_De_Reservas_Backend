@@ -1,8 +1,8 @@
-// Exemplo: src/database/index.ts (ou onde você inicializa o Sequelize)
 import { Sequelize } from "sequelize";
-import User from "../models/User";
-import Service from "../models/Service";
-import databaseconfig from "../config/database";
+import User from "../models/User.js";
+import Service from "../models/Service.js";
+
+import databaseconfig from "../config/database.js";
 
 const models = [User, Service];
 

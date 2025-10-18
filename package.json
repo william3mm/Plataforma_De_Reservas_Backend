@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/start/server.ts",
+    "dev": "nodemon --exec node --loader ts-node/esm src/start/server.ts",
     "build": "tsc --watch",
     "start": "nodemon dist/start/server.js",
     "migrate:create": "npx sequelize-cli migration:create --name",
-    "migrate": "npx sequelize-cli db:migrate"
+    "migrate:undo": "ts-node ./node_modules/.bin/sequelize db:migrate:undo --env development"
   },
   "keywords": [],
   "author": "",

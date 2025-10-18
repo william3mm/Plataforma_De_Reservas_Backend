@@ -1,7 +1,7 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
 import bcrypt from "bcrypt";
-import { UserType } from "../types/User";
-import { UserAttributes } from "../interfaces/User";
+import { UserType } from "../types/User.js";
+import { UserAttributes } from "../interfaces/User.js";
 
 export default class User
   extends Model<UserAttributes>

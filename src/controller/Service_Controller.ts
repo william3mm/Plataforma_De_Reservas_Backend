@@ -1,5 +1,5 @@
-import Service from "../models/Service";
-import checkPrestador from "../validator/checkPrestador";
+import Service from "../models/Service.js";
+import checkPrestador from "../validator/checkPrestador.js";
 import { Response } from "express";
 
 // Função de guarda de tipo para erros (pode ser reutilizada)

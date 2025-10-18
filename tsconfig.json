@@ -10,7 +10,11 @@
     "skipLibCheck": true,
     "strictBindCallApply": false,
     "strictFunctionTypes": false,
+    // "allowImportingTsExtensions": true,
     "typeRoots": ["./src/@types", "./node_modules/@types"]
   },
-  "include": ["src", "src/types/**/*.d.ts"]
+  "include": ["src", "src/types/**/*.d.ts"],
+  "ts-node": {
+    "esm": true
+  }
 }

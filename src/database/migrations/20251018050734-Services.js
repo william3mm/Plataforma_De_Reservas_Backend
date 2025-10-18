@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable("services", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -14,42 +14,37 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      nif: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      senha: {
-        type: Sequelize.STRING,
+      descricao: {
+        type: Sequelize.TEXT,
         allowNull: false,
       },
-      saldo: {
+      preco: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
-        defaultValue: 0.0,
       },
-      tipo: {
-        type: Sequelize.ENUM("CLIENTE", "PRESTADOR"),
+      prestador_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "users",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
-      createdAt: {
-        allowNull: false,
+      created_at: {
         type: Sequelize.DATE,
+        allowNull: false,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
-      updatedAt: {
-        allowNull: false,
+      updated_at: {
         type: Sequelize.DATE,
+        allowNull: false,
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("services");
   },
 };
