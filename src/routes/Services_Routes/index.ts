@@ -5,7 +5,7 @@ import ServiceController from "../../controller/Service_Controller";
 
 import authMiddleware from "../../middlewares/Auth_Middleware";
 
-import ENV from "../../config/env.js";
+import ENV from "../../config/env";
 
 const router = Router();
 

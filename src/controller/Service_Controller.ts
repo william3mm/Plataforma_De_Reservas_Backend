@@ -1,7 +1,6 @@
-import Service from "../models/Service.js";
-import checkPrestador from "../validator/checkPrestador.js";
-import { Response, Request } from "express"; // Removemos Request
-import { AuthRequest } from "../interfaces/Auth_Request.js"; // Usamos o tipo customizado
+import Service from "../models/Service";
+import checkPrestador from "../validator/checkPrestador";
+import { Response } from "express";
 
 // Função de guarda de tipo para erros (pode ser reutilizada)
 function isErrorWithMessage(error: unknown): error is { message: string } {
@@ -15,7 +14,7 @@ function isErrorWithMessage(error: unknown): error is { message: string } {
 
 export default class ServiceController {
   // Usamos AuthRequest em vez de Request
-  static async create(req: Request, res: Response) {
+  static async create(req: any, res: Response) {
     try {
       // O erro de 'checkPrestador' foi corrigido usando AuthRequest
       checkPrestador(req);
@@ -46,7 +45,7 @@ export default class ServiceController {
   }
 
   // Repetir a correção para update
-  static async update(req: AuthRequest, res: Response) {
+  static async update(req: any, res: Response) {
     try {
       checkPrestador(req);
 
@@ -70,7 +69,7 @@ export default class ServiceController {
   }
 
   // Repetir a correção para delete
-  static async delete(req: AuthRequest, res: Response) {
+  static async delete(req: any, res: Response) {
     try {
       checkPrestador(req);
 

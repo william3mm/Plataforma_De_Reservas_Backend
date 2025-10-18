@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { Op } from "sequelize";
-import bcrypt from "bcrypt";
 import User from "../models/User";
 import { UserType } from "../types/User";
 
