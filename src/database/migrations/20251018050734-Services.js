@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
-      prestador_id: {
+      prestadorId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

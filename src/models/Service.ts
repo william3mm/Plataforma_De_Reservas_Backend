@@ -47,11 +47,24 @@ export default class Service
           },
           onDelete: "CASCADE",
         },
+        createdAt: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          field: "created_at",
+        },
+
+        updatedAt: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          field: "updated_at",
+        },
       },
+
       {
         sequelize,
         tableName: "services",
         modelName: "Service",
+        timestamps: true,
       }
     );
   }
