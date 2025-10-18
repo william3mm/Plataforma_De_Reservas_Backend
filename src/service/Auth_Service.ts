@@ -32,13 +32,13 @@ export default async function login(emailOrNif: string, senha: string) {
   });
 
   return {
-    token,
     data: {
       id: user.id,
       nome: user.nome,
       tipo: user.tipo,
       email: user.email,
       saldo: user.saldo,
+      token,
     },
   };
 }
