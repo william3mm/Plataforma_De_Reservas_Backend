@@ -1,4 +1,5 @@
 import Service from "../models/Service.js";
+import User from "../models/User.js";
 import checkPrestador from "../validator/checkPrestador.js";
 
 // Função de guarda de tipo para erros (pode ser reutilizada)
@@ -86,6 +87,30 @@ export default class ServiceController {
         ? error.message
         : "Erro desconhecido";
       return res.status(400).json({ message });
+    }
+  }
+  static async list(req: any, res: any) {
+    try {
+      const tipo = (req as any).tipo; // vem do token
+      if (tipo !== "CLIENTE") {
+        return res.status(403).json({ message: "Acesso negado" });
+      }
+
+      // Buscar todos os serviços
+      const services = await Service.findAll({
+        include: [
+          {
+            model: User,
+            as: "prestador",
+            attributes: ["id", "nome", "email"],
+          },
+        ],
+      });
+
+      return res.status(200).json({ data: services });
+    } catch (error: any) {
+      console.error(error);
+      return res.status(500).json({ message: "Erro interno do servidor" });
     }
   }
 }

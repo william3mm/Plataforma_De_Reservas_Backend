@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { RequestHandler } from "express";
 
 import ServiceController from "../../controller/Service_Controller.js";
 
@@ -11,10 +10,11 @@ const router = Router();
 
 const auth = authMiddleware(ENV.JWT_SECRET);
 
-router.post("/", auth, ServiceController.create as RequestHandler);
+router.get("/", auth, ServiceController.list);
+router.post("/", auth, ServiceController.create);
 
-router.put("/:id", auth, ServiceController.update as RequestHandler);
+router.put("/:id", auth, ServiceController.update);
 
-router.delete("/:id", auth, ServiceController.delete as RequestHandler);
+router.delete("/:id", auth, ServiceController.delete);
 
 export default router;
