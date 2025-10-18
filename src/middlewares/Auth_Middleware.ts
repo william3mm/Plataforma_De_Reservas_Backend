@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { JwtPayload } from "../interfaces/Jwt_Payload.js";
 
 export default function authMiddleware(secret: string) {
-  return (req: any, res: Response, next: any) => {
+  return (req: any, res: any, next: any) => {
     const authorization = req.headers.authorization;
 
     if (!authorization) {
