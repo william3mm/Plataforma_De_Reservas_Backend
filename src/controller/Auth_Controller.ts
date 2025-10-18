@@ -22,7 +22,6 @@ export default class AuthController {
         return res.status(404).json({ message: "Usuário não encontrado" });
       }
 
-      console.log(user.nome);
       return res.json({
         data: {
           id: user.id,

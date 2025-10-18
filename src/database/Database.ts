@@ -9,3 +9,9 @@ const models = [User, Service, Reservation];
 export const sequelize = new Sequelize(databaseconfig);
 
 models.forEach((model) => model.initModel(sequelize));
+
+models.forEach((model) => {
+  if ("associate" in model) {
+    model.associate(sequelize.models);
+  }
+});
