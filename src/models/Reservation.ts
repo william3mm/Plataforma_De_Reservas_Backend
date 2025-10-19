@@ -1,7 +1,7 @@
 import * as SequelizePackage from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { ReservationAttributes } from "../interfaces/Reservation.js";
 
-const { DataTypes, Model, Sequelize } = SequelizePackage;
 type SequelizeInstance = SequelizePackage.Sequelize;
 
 export default class Reservation

@@ -1,12 +1,14 @@
 import * as SequelizePackage from "sequelize";
+import { DataTypes, Model, Optional } from "sequelize"; // ✅ CORRIGIDO: Importa DataTypes, Model e Optional diretamente
 import bcrypt from "bcrypt";
 import { UserType } from "../types/User.js";
 import { UserAttributes } from "../interfaces/User.js";
 
-const { DataTypes, Model } = SequelizePackage;
-type Optional<T, K extends keyof T> = SequelizePackage.Optional<T, K>;
+// Removido: const { DataTypes, Model } = SequelizePackage; // Esta linha causava TS2339 e TS2507
+// Removido: type Optional<T, K extends keyof T> = SequelizePackage.Optional<T, K>; // Este tipo não estava em SequelizePackage
 
 export default class User
+  // ✅ Usa o tipo Optional importado diretamente
   extends Model<UserAttributes, Optional<UserAttributes, "id" | "saldo">>
   implements UserAttributes
 {
@@ -29,7 +31,7 @@ export default class User
     (User as any).init(
       {
         id: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.INTEGER, // DataTypes agora é reconhecido
           allowNull: false,
           primaryKey: true,
           autoIncrement: true,
