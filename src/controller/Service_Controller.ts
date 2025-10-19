@@ -1,7 +1,6 @@
 import Service from "../models/Service.js";
+import User from "../models/User.js";
 import checkPrestador from "../validator/checkPrestador.js";
-import { Response, Request } from "express"; // Removemos Request
-import { AuthRequest } from "../interfaces/Auth_Request.js"; // Usamos o tipo customizado
 
 // Função de guarda de tipo para erros (pode ser reutilizada)
 function isErrorWithMessage(error: unknown): error is { message: string } {
@@ -15,7 +14,7 @@ function isErrorWithMessage(error: unknown): error is { message: string } {
 
 export default class ServiceController {
   // Usamos AuthRequest em vez de Request
-  static async create(req: Request, res: Response) {
+  static async create(req: any, res: any) {
     try {
       // O erro de 'checkPrestador' foi corrigido usando AuthRequest
       checkPrestador(req);
@@ -26,7 +25,6 @@ export default class ServiceController {
         throw new Error("Todos os campos são obrigatórios");
       }
 
-      // req.userID agora é reconhecido pelo TypeScript!
       const prestadorId = req.userID;
 
       const service = await Service.create({
@@ -35,7 +33,7 @@ export default class ServiceController {
         preco,
         prestadorId,
       });
-      return res.status(201).json(service);
+      return res.status(201).json({ data: service });
     } catch (error) {
       // Usamos a função de guarda para tratar o erro com segurança
       const message = isErrorWithMessage(error)
@@ -46,7 +44,7 @@ export default class ServiceController {
   }
 
   // Repetir a correção para update
-  static async update(req: AuthRequest, res: Response) {
+  static async update(req: any, res: any) {
     try {
       checkPrestador(req);
 
@@ -54,6 +52,17 @@ export default class ServiceController {
       const { nome, descricao, preco } = req.body;
       const prestadorId = req.userID;
 
+      if (!nome && !descricao && !preco) {
+        return res
+          .status(400)
+          .json("É necessário fornecer algum dado para actualizar");
+      }
+
+      if (preco <= 0) {
+        return res
+          .status(400)
+          .json("O valor do campo preço não pode ser negativo");
+      }
       const service = await Service.findOne({ where: { id, prestadorId } });
 
       if (!service) throw new Error("Serviço não encontrado ou sem permissão");
@@ -70,7 +79,7 @@ export default class ServiceController {
   }
 
   // Repetir a correção para delete
-  static async delete(req: AuthRequest, res: Response) {
+  static async delete(req: any, res: any) {
     try {
       checkPrestador(req);
 
@@ -90,5 +99,52 @@ export default class ServiceController {
         : "Erro desconhecido";
       return res.status(400).json({ message });
     }
+  }
+  static async list(req: any, res: any) {
+    try {
+      const id = req.userID;
+
+      const tipo = req.tipo;
+      // Let's check if the user is a client or a worker
+
+      const user = await User.findOne({ where: { id, tipo } });
+
+      if (!user) {
+        return res.status(404).json({ message: "Usuário não encontrado" });
+      }
+
+      const services = await Service.findAll({
+        include: [
+          {
+            model: User,
+            as: "prestador",
+            attributes: ["id", "nome", "email"],
+          },
+        ],
+      });
+
+      return res.status(200).json({ data: services });
+    } catch (error: any) {
+      console.error(error);
+      return res.status(500).json({ message: "Erro interno do servidor" });
+    }
+  }
+
+  static async myservices(req: any, res: any) {
+    try {
+      checkPrestador(req);
+
+      const id = req.userID;
+      const services = await Service.findAll({
+        where: { prestadorId: id },
+        attributes: ["id", "nome", "preco", "descricao"],
+      });
+
+      if (!services) {
+        return res.status(400).json({ message: "Nenhum serviço criado" });
+      }
+
+      return res.status(200).json({ services });
+    } catch (error) {}
   }
 }

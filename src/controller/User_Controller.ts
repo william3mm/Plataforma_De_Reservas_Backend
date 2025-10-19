@@ -1,11 +1,9 @@
-import { Request, Response } from "express";
 import { Op } from "sequelize";
-import bcrypt from "bcrypt";
-import User from "../models/User";
-import { UserType } from "../types/User";
+import User from "../models/User.js";
+import { UserType } from "../types/User.js";
 
 export default class UserController {
-  static async create(req: Request, res: Response) {
+  static async create(req: any, res: any) {
     try {
       const { nome, email, nif, senha, tipo } = req.body;
 

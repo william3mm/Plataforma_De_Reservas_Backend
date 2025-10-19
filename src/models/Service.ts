@@ -1,11 +1,13 @@
 import { Model, DataTypes, Sequelize as SequelizeInstance } from "sequelize";
-import { ServiceAttributes } from "../interfaces/Service";
-import User from "./User";
+import { ServiceAttributes } from "../interfaces/Service.js";
 
 export default class Service
   extends Model<ServiceAttributes, Partial<ServiceAttributes>>
   implements ServiceAttributes
 {
+  static associate(models: any) {
+    this.belongsTo(models.User, { foreignKey: "prestadorId", as: "prestador" });
+  }
   public id!: number;
   public nome!: string;
   public descricao!: string;
@@ -35,24 +37,38 @@ export default class Service
         preco: {
           type: DataTypes.DECIMAL,
           allowNull: false,
+          validate: {
+            min: 1,
+          },
         },
         prestadorId: {
           type: DataTypes.INTEGER,
           allowNull: false,
           references: {
-            model: User,
+            model: "User",
             key: "id",
           },
           onDelete: "CASCADE",
         },
+        createdAt: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          field: "created_at",
+        },
+
+        updatedAt: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          field: "updated_at",
+        },
       },
+
       {
         sequelize,
         tableName: "services",
         modelName: "Service",
+        timestamps: true,
       }
     );
-
-    Service.belongsTo(User, { foreignKey: "prestadorId", as: "prestador" });
   }
 }

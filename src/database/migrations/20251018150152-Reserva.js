@@ -3,53 +3,52 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable("reservations", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      nome: {
-        type: Sequelize.STRING,
+      clienteId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "users",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
-      nif: {
-        type: Sequelize.STRING,
+      servicoId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
+        references: {
+          model: "services",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      senha: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      saldo: {
+      valor: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
-        defaultValue: 0.0,
       },
-      tipo: {
-        type: Sequelize.ENUM("CLIENTE", "PRESTADOR"),
+      status: {
+        type: Sequelize.ENUM("PENDENTE", "CONFIRMADA", "CANCELADA"),
+        defaultValue: "PENDENTE",
         allowNull: false,
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+        allowNull: false,
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false,
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("reservations");
   },
 };

@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 import { JwtPayload } from "../interfaces/Jwt_Payload.js";
 
 export default function authMiddleware(secret: string) {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: any, res: any, next: any) => {
     const authorization = req.headers.authorization;
 
     if (!authorization) {

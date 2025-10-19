@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import User from "../models/User";
+import User from "../models/User.js";
 import bcrypt from "bcrypt";
-import ENV from "../config/env";
+import ENV from "../config/env.js";
 import { JwtPayload } from "../interfaces/Jwt_Payload.js";
 
 export default async function login(emailOrNif: string, senha: string) {
@@ -32,13 +32,12 @@ export default async function login(emailOrNif: string, senha: string) {
   });
 
   return {
+    id: user.id,
+    nome: user.nome,
+    email: user.email,
+    nif: user.nif,
+    tipo: user.tipo,
+    saldo: user.saldo,
     token,
-    data: {
-      id: user.id,
-      nome: user.nome,
-      tipo: user.tipo,
-      email: user.email,
-      saldo: user.saldo,
-    },
   };
 }

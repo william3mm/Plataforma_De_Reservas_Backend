@@ -1,8 +1,7 @@
-import dotenv from "dotenv";
-import app from "./app";
+import app from "./app.js";
 
-dotenv.config();
-
-app.listen(3004, "0.0.0.0", () => {
-  console.log("ouvindo...");
-});
+try {
+  app.listen(3004, () => console.log("ouvindo..."));
+} catch (err) {
+  console.error("Erro ao iniciar o servidor:", err);
+}
