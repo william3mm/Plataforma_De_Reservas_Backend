@@ -1,20 +1,26 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "CommonJs",
+    // 🛑 MUDAR: Use "node" ou "classic" para CommonJS. "nodenext" força o modo ESM que causa o problema.
+    "moduleResolution": "node", 
+    
     "target": "ES2020",
     "rootDir": "src",
     "outDir": "dist",
     "strict": true,
-    "esModuleInterop": true,
+    
+    // ✅ MANTER: Garante que o Node.js consegue importar módulos CommonJS (como o Sequelize) usando a sintaxe ESM.
+    "esModuleInterop": true, 
+    
     "skipLibCheck": true,
-    "strictBindCallApply": false,
-    "strictFunctionTypes": false,
-    // "allowImportingTsExtensions": true,
+    
+    // ... (restante das suas configurações)
     "typeRoots": ["./src/@types", "./node_modules/@types"]
   },
   "include": ["src", "src/types/**/*.d.ts"],
-  "ts-node": {
-    "esm": true
-  }
+  
+  // 🛑 REMOVER ISTO: Isto é uma configuração de desenvolvimento para ts-node e não deve estar no arquivo de compilação de produção.
+  // "ts-node": {
+  //    "esm": true
+  // }
 }
