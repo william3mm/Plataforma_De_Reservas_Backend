@@ -12,7 +12,8 @@ export default async function login(emailOrNif: string, senha: string) {
     ? { email: emailOrNif }
     : { nif: emailOrNif };
 
-  const user = await User.findOne({ where });
+  // CORREÇÃO: Usar (User as any) para resolver o erro TS2339
+  const user = await (User as any).findOne({ where });
 
   if (!user) {
     throw new Error("Usuário não encontrado");

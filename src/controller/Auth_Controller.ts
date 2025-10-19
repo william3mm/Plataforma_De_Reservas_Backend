@@ -16,7 +16,7 @@ export default class AuthController {
   static async me(req: any, res: any) {
     try {
       const userId = req.userID;
-      const user = await User.findByPk(userId, {
+      const user = await (User as any).findByPk(userId, {
         attributes: ["id", "nome", "email", "tipo", "saldo"],
       });
 

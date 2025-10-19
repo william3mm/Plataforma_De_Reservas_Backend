@@ -17,7 +17,8 @@ export default class UserController {
         return res.status(400).json({ message: "Tipo de usuário inválido" });
       }
 
-      const existingUser = await User.findOne({
+      // ✅ CORREÇÃO: findOne em User
+      const existingUser = await (User as any).findOne({
         where: { [Op.or]: [{ email }, { nif }] },
       });
 
@@ -25,7 +26,7 @@ export default class UserController {
         return res.status(400).json({ message: "Email ou NIF já cadastrado" });
       }
 
-      const user = await User.create({
+      const user = await (User as any).create({
         nome,
         email,
         nif,

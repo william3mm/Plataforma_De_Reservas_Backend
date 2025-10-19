@@ -13,10 +13,8 @@ function isErrorWithMessage(error: unknown): error is { message: string } {
 }
 
 export default class ServiceController {
-  // Usamos AuthRequest em vez de Request
   static async create(req: any, res: any) {
     try {
-      // O erro de 'checkPrestador' foi corrigido usando AuthRequest
       checkPrestador(req);
 
       const { nome, descricao, preco } = req.body;
@@ -27,7 +25,7 @@ export default class ServiceController {
 
       const prestadorId = req.userID;
 
-      const service = await Service.create({
+      const service = await (Service as any).create({
         nome,
         descricao,
         preco,
@@ -35,7 +33,6 @@ export default class ServiceController {
       });
       return res.status(201).json({ data: service });
     } catch (error) {
-      // Usamos a função de guarda para tratar o erro com segurança
       const message = isErrorWithMessage(error)
         ? error.message
         : "Erro desconhecido";
@@ -43,7 +40,6 @@ export default class ServiceController {
     }
   }
 
-  // Repetir a correção para update
   static async update(req: any, res: any) {
     try {
       checkPrestador(req);
@@ -63,7 +59,10 @@ export default class ServiceController {
           .status(400)
           .json("O valor do campo preço não pode ser negativo");
       }
-      const service = await Service.findOne({ where: { id, prestadorId } });
+
+      const service = await (Service as any).findOne({
+        where: { id, prestadorId },
+      });
 
       if (!service) throw new Error("Serviço não encontrado ou sem permissão");
 
@@ -78,7 +77,6 @@ export default class ServiceController {
     }
   }
 
-  // Repetir a correção para delete
   static async delete(req: any, res: any) {
     try {
       checkPrestador(req);
@@ -86,7 +84,9 @@ export default class ServiceController {
       const { id } = req.params;
       const prestadorId = req.userID;
 
-      const service = await Service.findOne({ where: { id, prestadorId } });
+      const service = await (Service as any).findOne({
+        where: { id, prestadorId },
+      });
 
       if (!service) throw new Error("Serviço não encontrado ou sem permissão");
 
@@ -100,20 +100,19 @@ export default class ServiceController {
       return res.status(400).json({ message });
     }
   }
+
   static async list(req: any, res: any) {
     try {
       const id = req.userID;
-
       const tipo = req.tipo;
-      // Let's check if the user is a client or a worker
 
-      const user = await User.findOne({ where: { id, tipo } });
+      const user = await (User as any).findOne({ where: { id, tipo } });
 
       if (!user) {
         return res.status(404).json({ message: "Usuário não encontrado" });
       }
 
-      const services = await Service.findAll({
+      const services = await (Service as any).findAll({
         include: [
           {
             model: User,
@@ -135,7 +134,7 @@ export default class ServiceController {
       checkPrestador(req);
 
       const id = req.userID;
-      const services = await Service.findAll({
+      const services = await (Service as any).findAll({
         where: { prestadorId: id },
         attributes: ["id", "nome", "preco", "descricao"],
       });

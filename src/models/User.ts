@@ -1,10 +1,13 @@
-import { DataTypes, Model, Sequelize } from "sequelize";
+import * as SequelizePackage from "sequelize";
 import bcrypt from "bcrypt";
 import { UserType } from "../types/User.js";
 import { UserAttributes } from "../interfaces/User.js";
 
+const { DataTypes, Model } = SequelizePackage;
+type Optional<T, K extends keyof T> = SequelizePackage.Optional<T, K>;
+
 export default class User
-  extends Model<UserAttributes>
+  extends Model<UserAttributes, Optional<UserAttributes, "id" | "saldo">>
   implements UserAttributes
 {
   public id!: number;
@@ -22,8 +25,8 @@ export default class User
     return bcrypt.compare(password, this.senha);
   }
 
-  static initModel(sequelize: Sequelize): typeof User {
-    User.init(
+  static initModel(sequelize: SequelizePackage.Sequelize): typeof User {
+    (User as any).init(
       {
         id: {
           type: DataTypes.INTEGER,
@@ -73,7 +76,7 @@ export default class User
             user.senha = await bcrypt.hash(user.senha, 8);
           },
           beforeUpdate: async (user: User) => {
-            if (user.changed("senha")) {
+            if ((user as any).changed("senha")) {
               user.senha = await bcrypt.hash(user.senha, 8);
             }
           },

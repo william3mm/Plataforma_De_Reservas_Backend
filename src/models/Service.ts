@@ -1,12 +1,18 @@
-import { Model, DataTypes, Sequelize as SequelizeInstance } from "sequelize";
+import * as SequelizePackage from "sequelize";
 import { ServiceAttributes } from "../interfaces/Service.js";
+
+const { DataTypes, Model, Sequelize } = SequelizePackage;
+type SequelizeInstance = SequelizePackage.Sequelize;
 
 export default class Service
   extends Model<ServiceAttributes, Partial<ServiceAttributes>>
   implements ServiceAttributes
 {
   static associate(models: any) {
-    this.belongsTo(models.User, { foreignKey: "prestadorId", as: "prestador" });
+    (this as any).belongsTo(models.User, {
+      foreignKey: "prestadorId",
+      as: "prestador",
+    });
   }
   public id!: number;
   public nome!: string;
@@ -18,7 +24,7 @@ export default class Service
   public readonly updatedAt!: Date;
 
   static initModel(sequelize: SequelizeInstance) {
-    Service.init(
+    (Service as any).init(
       {
         id: {
           type: DataTypes.INTEGER,

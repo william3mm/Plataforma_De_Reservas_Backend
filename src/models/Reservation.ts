@@ -1,5 +1,8 @@
-import { Model, DataTypes, Sequelize as SequelizeInstance } from "sequelize";
+import * as SequelizePackage from "sequelize";
 import { ReservationAttributes } from "../interfaces/Reservation.js";
+
+const { DataTypes, Model, Sequelize } = SequelizePackage;
+type SequelizeInstance = SequelizePackage.Sequelize;
 
 export default class Reservation
   extends Model<ReservationAttributes, Partial<ReservationAttributes>>
@@ -15,12 +18,18 @@ export default class Reservation
   public readonly updatedAt!: Date;
 
   static associate(models: any) {
-    this.belongsTo(models.User, { foreignKey: "clienteId", as: "cliente" });
-    this.belongsTo(models.Service, { foreignKey: "servicoId", as: "servico" });
+    (this as any).belongsTo(models.User, {
+      foreignKey: "clienteId",
+      as: "cliente",
+    });
+    (this as any).belongsTo(models.Service, {
+      foreignKey: "servicoId",
+      as: "servico",
+    });
   }
 
   static initModel(sequelize: SequelizeInstance) {
-    Reservation.init(
+    (Reservation as any).init(
       {
         id: {
           type: DataTypes.INTEGER,
