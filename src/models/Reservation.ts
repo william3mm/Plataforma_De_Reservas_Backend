@@ -15,8 +15,8 @@ export default class Reservation
   public readonly updatedAt!: Date;
 
   static associate(models: any) {
-    this.belongsTo(models.User, { as: "cliente", foreignKey: "clienteId" });
-    this.belongsTo(models.Service, { as: "servico", foreignKey: "servicoId" });
+    this.belongsTo(models.User, { foreignKey: "clienteId", as: "cliente" });
+    this.belongsTo(models.Service, { foreignKey: "servicoId", as: "servico" });
   }
 
   static initModel(sequelize: SequelizeInstance) {

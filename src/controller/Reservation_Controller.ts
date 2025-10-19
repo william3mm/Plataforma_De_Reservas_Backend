@@ -79,7 +79,28 @@ export default class ReservationController {
         where.servicoId = servicos.map((servico: any) => servico.id);
       }
 
-      const reservas = await Reservation.findAll({ where });
+      const reservas = await Reservation.findAll({
+        where,
+
+        include: [
+          { model: User, as: "cliente", attributes: ["id", "nome", "email"] },
+
+          {
+            model: Service,
+            as: "servico",
+            attributes: ["id", "nome", "preco"],
+
+            include: [
+              {
+                model: User,
+                as: "prestador",
+                attributes: ["id", "nome", "email"],
+              },
+            ],
+          },
+        ],
+      });
+
       return res.json({ data: reservas });
     } catch (error: any) {
       console.error("Erro ao listar reservas:", error);
