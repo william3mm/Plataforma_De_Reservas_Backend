@@ -11,6 +11,7 @@ const router = Router();
 const auth = authMiddleware(ENV.JWT_SECRET);
 
 router.get("/", auth, ServiceController.list);
+router.get("/me", auth, ServiceController.myservices);
 router.post("/", auth, ServiceController.create);
 
 router.put("/:id", auth, ServiceController.update);

@@ -130,9 +130,21 @@ export default class ServiceController {
     }
   }
 
-  // static async myservices(req: any, res: any) {
-  //   try {
-  //     checkCliente()
-  //   } catch (error) {}
-  // }
+  static async myservices(req: any, res: any) {
+    try {
+      checkPrestador(req);
+
+      const id = req.userID;
+      const services = await Service.findAll({
+        where: { prestadorId: id },
+        attributes: ["id", "nome", "preco", "descricao"],
+      });
+
+      if (!services) {
+        return res.status(400).json({ message: "Nenhum serviço criado" });
+      }
+
+      return res.status(200).json({ services });
+    } catch (error) {}
+  }
 }
