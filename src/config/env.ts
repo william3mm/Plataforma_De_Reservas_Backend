@@ -1,4 +1,3 @@
-// src/config/env.cjs
 import dotenv from "dotenv";
 
 dotenv.config();

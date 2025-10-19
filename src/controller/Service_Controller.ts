@@ -123,7 +123,7 @@ export default class ServiceController {
         ],
       });
 
-      return res.status(200).json({ data: services });
+      return res.status(200).json({ services });
     } catch (error: any) {
       console.error(error);
       return res.status(500).json({ message: "Erro interno do servidor" });
