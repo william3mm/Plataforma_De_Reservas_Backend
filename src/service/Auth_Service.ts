@@ -32,13 +32,12 @@ export default async function login(emailOrNif: string, senha: string) {
   });
 
   return {
-    data: {
-      id: user.id,
-      nome: user.nome,
-      tipo: user.tipo,
-      email: user.email,
-      saldo: user.saldo,
-      token,
-    },
+    id: user.id,
+    nome: user.nome,
+    email: user.email,
+    nif: user.nif,
+    tipo: user.tipo,
+    saldo: user.saldo,
+    token,
   };
 }

@@ -101,6 +101,33 @@ export default class ReservationController {
         ],
       });
 
+      // 🚨 Transformamos no formato desejado
+      // const formatted = reservas.map((r) => ({
+      //   id: r.id,
+      //   valor: r.valor,
+      //   status: r.status,
+      //   cliente: {
+      //     id: r.cliente.id,
+      //     nome: r.cliente.nome,
+      //     email: r.cliente.email,
+      //     nif: r.cliente.nif,
+      //     tipo: r.cliente.tipo,
+      //     saldo: r.cliente.saldo,
+      //   },
+      //   servico: {
+      //     id: r.servico.id,
+      //     nome: r.servico.nome,
+      //     preco: r.servico.preco,
+      //     prestador: {
+      //       id: r.servico.prestador.id,
+      //       nome: r.servico.prestador.nome,
+      //       email: r.servico.prestador.email,
+      //     },
+      //   },
+      // }));
+
+      // return res.json({ data: formatted });
+
       return res.json({ data: reservas });
     } catch (error: any) {
       console.error("Erro ao listar reservas:", error);

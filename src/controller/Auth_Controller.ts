@@ -16,22 +16,15 @@ export default class AuthController {
   static async me(req: any, res: any) {
     try {
       const userId = req.userID;
-      const user = await User.findByPk(userId);
+      const user = await User.findByPk(userId, {
+        attributes: ["id", "nome", "email", "tipo", "saldo"],
+      });
 
       if (!user) {
         return res.status(404).json({ message: "Usuário não encontrado" });
       }
 
-      return res.json({
-        data: {
-          id: user.id,
-          nome: user.nome,
-          email: user.email,
-          nif: user.nif,
-          tipo: user.tipo,
-          saldo: user.saldo,
-        },
-      });
+      return res.json({ user });
     } catch (error: any) {
       console.error(error);
       return res.status(500).json({ message: "Erro interno do servidor" });
