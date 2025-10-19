@@ -7,8 +7,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec node --loader ts-node/esm src/start/server.ts",
-    "build": "tsc --watch",
+    "build": "tsc",
     "start": "nodemon dist/start/server.js",
+    "start:prod": "node dist/start/server.js",
     "migrate:create": "npx sequelize-cli migration:create --name",
     "migrate:undo": "ts-node ./node_modules/.bin/sequelize db:migrate:undo --env development"
   },
