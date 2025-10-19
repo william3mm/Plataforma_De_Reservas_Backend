@@ -37,6 +37,9 @@ export default class Service
         preco: {
           type: DataTypes.DECIMAL,
           allowNull: false,
+          validate: {
+            min: 1,
+          },
         },
         prestadorId: {
           type: DataTypes.INTEGER,

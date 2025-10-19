@@ -52,6 +52,17 @@ export default class ServiceController {
       const { nome, descricao, preco } = req.body;
       const prestadorId = req.userID;
 
+      if (!nome && !descricao && !preco) {
+        return res
+          .status(400)
+          .json("É necessário fornecer algum dado para actualizar");
+      }
+
+      if (preco <= 0) {
+        return res
+          .status(400)
+          .json("O valor do campo preço não pode ser negativo");
+      }
       const service = await Service.findOne({ where: { id, prestadorId } });
 
       if (!service) throw new Error("Serviço não encontrado ou sem permissão");
@@ -91,12 +102,17 @@ export default class ServiceController {
   }
   static async list(req: any, res: any) {
     try {
-      const tipo = (req as any).tipo; // vem do token
-      if (tipo !== "CLIENTE") {
-        return res.status(403).json({ message: "Acesso negado" });
+      const id = req.userID;
+
+      const tipo = req.tipo;
+      // Let's check if the user is a client or a worker
+
+      const user = await User.findOne({ where: { id, tipo } });
+
+      if (!user) {
+        return res.status(404).json({ message: "Usuário não encontrado" });
       }
 
-      // Buscar todos os serviços
       const services = await Service.findAll({
         include: [
           {
@@ -113,4 +129,10 @@ export default class ServiceController {
       return res.status(500).json({ message: "Erro interno do servidor" });
     }
   }
+
+  // static async myservices(req: any, res: any) {
+  //   try {
+  //     checkCliente()
+  //   } catch (error) {}
+  // }
 }
