@@ -1,18 +1,17 @@
+// tsconfig.json
 {
   "compilerOptions": {
     "module": "NodeNext",
-
     "moduleResolution": "NodeNext",
-
     "target": "ES2020",
     "rootDir": "src",
     "outDir": "dist",
     "strict": true,
 
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true, // 🚨 ADICIONAR/CONFIRMAR ESTA LINHA
 
     "skipLibCheck": true,
-
     "typeRoots": ["./src/@types", "./node_modules/@types"]
   },
   "include": ["src", "src/types/**/*.d.ts"]
