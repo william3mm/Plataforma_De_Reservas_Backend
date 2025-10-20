@@ -4,7 +4,9 @@ import bcrypt from "bcrypt";
 import { UserType } from "../types/User.js";
 import { UserAttributes } from "../interfaces/User.js";
 
-import { DataType } from "sequelize/types/data-types";
+import * as DataTypes from "sequelize";
+
+type SequelizeInstance = SequelizePackage.Sequelize;
 const { Model } = SequelizePackage;
 
 export default class User
@@ -26,26 +28,26 @@ export default class User
     return bcrypt.compare(password, this.senha);
   }
 
-  static initModel(sequelize: SequelizePackage.Sequelize): typeof User {
+  static initModel(sequelize: SequelizeInstance): typeof User {
     (User as any).init(
       {
         id: {
-          type: SequelizePackage.DataTypes.INTEGER,
+          type: DataTypes.INTEGER,
           allowNull: false,
           primaryKey: true,
           autoIncrement: true,
         },
         nome: {
-          type: SequelizePackage.DataTypes.STRING(100),
+          type: DataTypes.STRING(100),
           allowNull: false,
         },
         nif: {
-          type: SequelizePackage.DataTypes.STRING(20),
+          type: DataTypes.STRING(20),
           allowNull: false,
           unique: true,
         },
         email: {
-          type: SequelizePackage.DataTypes.STRING(100),
+          type: DataTypes.STRING(100),
           allowNull: false,
           unique: true,
           validate: {
@@ -55,19 +57,16 @@ export default class User
           },
         },
         senha: {
-          type: SequelizePackage.DataTypes.STRING(255),
+          type: DataTypes.STRING(255),
           allowNull: false,
         },
         saldo: {
-          type: SequelizePackage.DataTypes.DECIMAL(10, 2),
+          type: DataTypes.DECIMAL(10, 2),
           defaultValue: 0.0,
           allowNull: false,
         },
         tipo: {
-          type: SequelizePackage.DataTypes.ENUM(
-            UserType.CLIENTE,
-            UserType.PRESTADOR
-          ),
+          type: DataTypes.ENUM(UserType.CLIENTE, UserType.PRESTADOR),
           allowNull: false,
         },
       },
