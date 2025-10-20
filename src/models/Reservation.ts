@@ -1,12 +1,11 @@
 import * as SequelizePackage from "sequelize";
 import { ReservationAttributes } from "../interfaces/Reservation.js";
 import * as DataTypes from "sequelize";
-const { Model } = SequelizePackage;
 
 type SequelizeInstance = SequelizePackage.Sequelize;
 
 export default class Reservation
-  extends Model<ReservationAttributes, Partial<ReservationAttributes>>
+  extends DataTypes.Model<ReservationAttributes, Partial<ReservationAttributes>>
   implements ReservationAttributes
 {
   public id!: number;

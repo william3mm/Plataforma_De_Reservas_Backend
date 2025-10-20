@@ -6,7 +6,7 @@ const { Model } = SequelizePackage;
 type SequelizeInstance = SequelizePackage.Sequelize;
 
 export default class Service
-  extends Model<ServiceAttributes, Partial<ServiceAttributes>>
+  extends DataTypes.Model<ServiceAttributes, Partial<ServiceAttributes>>
   // ✅ TS2507 resolvido
   implements ServiceAttributes
 {

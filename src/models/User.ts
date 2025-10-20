@@ -7,10 +7,12 @@ import { UserAttributes } from "../interfaces/User.js";
 import * as DataTypes from "sequelize";
 
 type SequelizeInstance = SequelizePackage.Sequelize;
-const { Model } = SequelizePackage;
 
 export default class User
-  extends Model<UserAttributes, Optional<UserAttributes, "id" | "saldo">>
+  extends DataTypes.Model<
+    UserAttributes,
+    Optional<UserAttributes, "id" | "saldo">
+  >
   implements UserAttributes
 {
   public id!: number;
