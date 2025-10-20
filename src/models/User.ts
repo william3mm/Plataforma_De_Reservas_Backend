@@ -4,7 +4,8 @@ import bcrypt from "bcrypt";
 import { UserType } from "../types/User.js";
 import { UserAttributes } from "../interfaces/User.js";
 
-const { DataTypes, Model } = SequelizePackage;
+import { DataType } from "sequelize/types/data-types";
+const { Model } = SequelizePackage;
 
 export default class User
   extends Model<UserAttributes, Optional<UserAttributes, "id" | "saldo">>
@@ -29,22 +30,22 @@ export default class User
     (User as any).init(
       {
         id: {
-          type: DataTypes.INTEGER,
+          type: SequelizePackage.DataTypes.INTEGER,
           allowNull: false,
           primaryKey: true,
           autoIncrement: true,
         },
         nome: {
-          type: DataTypes.STRING(100),
+          type: SequelizePackage.DataTypes.STRING(100),
           allowNull: false,
         },
         nif: {
-          type: DataTypes.STRING(20),
+          type: SequelizePackage.DataTypes.STRING(20),
           allowNull: false,
           unique: true,
         },
         email: {
-          type: DataTypes.STRING(100),
+          type: SequelizePackage.DataTypes.STRING(100),
           allowNull: false,
           unique: true,
           validate: {
@@ -54,16 +55,19 @@ export default class User
           },
         },
         senha: {
-          type: DataTypes.STRING(255),
+          type: SequelizePackage.DataTypes.STRING(255),
           allowNull: false,
         },
         saldo: {
-          type: DataTypes.DECIMAL(10, 2),
+          type: SequelizePackage.DataTypes.DECIMAL(10, 2),
           defaultValue: 0.0,
           allowNull: false,
         },
         tipo: {
-          type: DataTypes.ENUM(UserType.CLIENTE, UserType.PRESTADOR),
+          type: SequelizePackage.DataTypes.ENUM(
+            UserType.CLIENTE,
+            UserType.PRESTADOR
+          ),
           allowNull: false,
         },
       },
