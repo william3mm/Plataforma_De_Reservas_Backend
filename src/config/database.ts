@@ -1,20 +1,19 @@
-import dotenv from "dotenv";
-import { Options } from "sequelize";
+// AQUI VAMOS FAZER A CONFIGURACAO DA BASE DE DADOS
 
-dotenv.config();
+require("dotenv").config();
 
-const databaseconfig: Options = {
+module.exports = {
   dialect: "mariadb",
 
-  host: process.env.DATABASE_HOST!,
+  host: process.env.DATABASE_HOST,
 
-  port: Number(process.env.DATABASE_PORT),
+  port: process.env.DATABASE_PORT,
 
-  username: process.env.DATABASE_USERNAME!,
+  username: process.env.DATABASE_USERNAME,
 
-  password: process.env.DATABASE_PASSWORD!,
+  password: process.env.DATABASE_PASSWORD,
 
-  database: process.env.DATABASE_NAME!,
+  database: process.env.DATABASE_NAME,
 
   define: {
     timestamps: true,
@@ -22,10 +21,9 @@ const databaseconfig: Options = {
 
   dialectOptions: {
     timezone: "+01:00",
+
     connectTimeout: 10000,
   },
 
   timezone: "+01:00",
 };
-
-export default databaseconfig;
