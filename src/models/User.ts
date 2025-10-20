@@ -9,7 +9,7 @@ import * as DataTypes from "sequelize";
 type SequelizeInstance = SequelizePackage.Sequelize;
 
 export default class User
-  extends DataTypes.Model<
+  extends SequelizePackage.Model<
     UserAttributes,
     Optional<UserAttributes, "id" | "saldo">
   >

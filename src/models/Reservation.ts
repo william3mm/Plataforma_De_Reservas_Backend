@@ -5,7 +5,10 @@ import * as DataTypes from "sequelize";
 type SequelizeInstance = SequelizePackage.Sequelize;
 
 export default class Reservation
-  extends DataTypes.Model<ReservationAttributes, Partial<ReservationAttributes>>
+  extends SequelizePackage.Model<
+    ReservationAttributes,
+    Partial<ReservationAttributes>
+  >
   implements ReservationAttributes
 {
   public id!: number;
