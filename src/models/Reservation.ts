@@ -1,6 +1,8 @@
 import * as SequelizePackage from "sequelize";
-import { DataTypes, Model } from "sequelize";
 import { ReservationAttributes } from "../interfaces/Reservation.js";
+
+// ✅ CORREÇÃO: Desestrutura os valores concretos do namespace importado
+const { DataTypes, Model } = SequelizePackage;
 
 type SequelizeInstance = SequelizePackage.Sequelize;
 

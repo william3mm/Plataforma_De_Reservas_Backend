@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec node --loader ts-node/esm src/start/server.ts",
     "build": "tsc",
-    "start": "dotenv -e .env -- node dist/start/server.js",
+    "start": "node dist/start/server.js",
     "start:prod": "node dist/start/server.js",
     "migrate:create": "npx sequelize-cli migration:create --name",
     "migrate:undo": "ts-node ./node_modules/.bin/sequelize db:migrate:undo --env development"

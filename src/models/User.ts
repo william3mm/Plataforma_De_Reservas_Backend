@@ -1,11 +1,10 @@
 import * as SequelizePackage from "sequelize";
-import { Optional } from "sequelize"; // Importa o tipo Optional
+import type { Optional } from "sequelize";
 import bcrypt from "bcrypt";
 import { UserType } from "../types/User.js";
 import { UserAttributes } from "../interfaces/User.js";
 
-const DataTypes = SequelizePackage.DataTypes;
-const Model = SequelizePackage.Model;
+const { DataTypes, Model } = SequelizePackage;
 
 export default class User
   extends Model<UserAttributes, Optional<UserAttributes, "id" | "saldo">>

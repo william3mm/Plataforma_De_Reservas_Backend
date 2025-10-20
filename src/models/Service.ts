@@ -1,12 +1,13 @@
 import * as SequelizePackage from "sequelize";
 import { ServiceAttributes } from "../interfaces/Service.js";
 
-const DataTypes = SequelizePackage.DataTypes;
-const Model = SequelizePackage.Model;
+const { DataTypes, Model } = SequelizePackage;
+
 type SequelizeInstance = SequelizePackage.Sequelize;
 
 export default class Service
   extends Model<ServiceAttributes, Partial<ServiceAttributes>>
+  // ✅ TS2507 resolvido
   implements ServiceAttributes
 {
   static associate(models: any) {
