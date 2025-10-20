@@ -19,7 +19,6 @@ Os comandos principais são:
 | `npm install` | Instala todas as dependências do projeto. |
 | `npm run dev` | Inicia o servidor em modo de desenvolvimento (usando nodemon). |
 | `npx sequelize db:migrate` | Cria a estrutura do banco de dados (tabelas) a partir das migrations. |
-| `npx sequelize db:seed:all` | Povoa o banco de dados com dados de teste (usuários CLIENTE e PRESTADOR). |
 
 
 ### 🔑 Configuração do Banco de Dados
@@ -49,10 +48,4 @@ A configuração foi realizada diretamente na VPS, garantindo a comunicação en
 
 Apesar do tempo limitado para o desenvolvimento e *deploy*, a configuração do ambiente na VPS proporcionou um aprendizado imenso em ambientes de produção.
 
-### A. Ordem Incorreta de Deleção (Migrations)
 
-**Problema:** Ao tentar apagar tabelas para testes (`DROP TABLE`), o MySQL retornava um erro de integridade (`Cannot drop table 'services' referenced by a foreign key...`).
-
-**Solução:** Foi necessário garantir que as tabelas fossem deletadas na ordem inversa da criação, começando pelas que contêm chaves estrangeiras. A solução mais rápida foi a limpeza manual via console MySQL:
-```sql
-DROP TABLE IF EXISTS reservations, services, users, SequelizeMeta;
