@@ -1,5 +1,5 @@
 import * as SequelizePackage from "sequelize";
-
+import { Optional, Model } from "sequelize";
 import bcrypt from "bcrypt";
 import { UserType } from "../types/User.js";
 import { UserAttributes } from "../interfaces/User.js";
@@ -8,8 +8,10 @@ import * as DataTypes from "sequelize";
 
 type SequelizeInstance = SequelizePackage.Sequelize;
 
+interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
+
 export default class User
-  extends SequelizePackage.Model
+  extends Model<UserAttributes, UserCreationAttributes>
   implements UserAttributes
 {
   public id!: number;
