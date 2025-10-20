@@ -1,17 +1,25 @@
 import * as SequelizePackage from "sequelize";
-import { Optional, Model } from "sequelize";
+import { Model, InferAttributes, InferCreationAttributes } from "sequelize";
+import { CreationOptional } from "sequelize";
 import bcrypt from "bcrypt";
 import { UserType } from "../types/User.js";
-import { UserAttributes } from "../interfaces/User.js";
+
+interface UserAttributes {
+  id: CreationOptional<number>;
+  nome: string;
+  nif: string;
+  email: string;
+  senha: string;
+  saldo: number;
+  tipo: UserType;
+}
 
 import * as DataTypes from "sequelize";
 
 type SequelizeInstance = SequelizePackage.Sequelize;
 
-interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
-
 export default class User
-  extends Model<UserAttributes, UserCreationAttributes>
+  extends Model<InferAttributes<User>, InferCreationAttributes<User>>
   implements UserAttributes
 {
   public id!: number;
