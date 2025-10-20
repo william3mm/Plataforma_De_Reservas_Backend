@@ -1,7 +1,7 @@
 import * as SequelizePackage from "sequelize";
 import { ServiceAttributes } from "../interfaces/Service.js";
-
-const { DataTypes, Model } = SequelizePackage;
+import * as DataTypes from "sequelize";
+const { Model } = SequelizePackage;
 
 type SequelizeInstance = SequelizePackage.Sequelize;
 
