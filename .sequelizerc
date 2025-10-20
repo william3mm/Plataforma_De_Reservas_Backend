@@ -2,6 +2,7 @@ const { resolve } = require("path");
 
 require("ts-node/register");
 module.exports = {
+
   config: resolve(__dirname, "src", "config", "database.ts"),
 
   "models-path": resolve(__dirname, "src", "models"),
